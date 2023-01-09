@@ -112,6 +112,10 @@ body{
     text-align: center;
 }
 
+.input-btn.clicked{
+    border: 1px solid black;
+}
+
 .xtra-sign{
     color: rgb(38,232,197);
 }
