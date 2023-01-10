@@ -98,7 +98,7 @@ body{
     padding-block: .5rem;
 }
 
-.input-btn{
+.input-btn, .delete, .equal{
     height: 50px;
     width: 50px;
     border-radius: 8px;
