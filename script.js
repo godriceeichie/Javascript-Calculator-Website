@@ -63,11 +63,16 @@ function add(input){
     let inputArray = input.split("+")
     for(i = 0; i < inputArray.length; i++){
         let letter = inputArray[i]
-        let sum = parseInt(letter)
+        let sum = Number(letter)
         for(j = i + 1; j < inputArray.length; j++){
             let secondLetter = inputArray[j]
-            sum += parseInt(secondLetter)
+            sum += Number(secondLetter)
         }
-        return sum
+        if(Number.isInteger(sum)){
+            return parseInt(sum)
+        }
+        else{
+            return parseFloat(sum)
+        }
     }
 }

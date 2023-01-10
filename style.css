@@ -133,3 +133,17 @@ body{
 .ac>.input-btn{
     width: 100%;
 }
+
+@media screen and (max-width: 500px) {
+    body{
+        max-height: 90vh;
+    }
+
+    .calc-output{
+        height: 30%;
+    }
+
+    .calc-input{
+        height: 70%;
+    }
+}
