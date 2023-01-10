@@ -7,6 +7,7 @@ let inputBtn = document.querySelectorAll(".input-btn");
 output2.value = '0';
 inputBtn.forEach(box => {
     box.addEventListener("click", (e) =>{
+        output1.textContent = 'Answer = 0'
         for(i = 0; i < inputBtn.length; i++){
             let item = inputBtn[i]
             if(item.classList.contains("clicked")){
@@ -39,6 +40,11 @@ inputBtn.forEach(box => {
 
         if(e.target.matches(".clear")){
             output2.value = removeWord(output2.value)
+            output1.textContent = ''
+        }
+
+        if(e.target.matches(".equal")){
+            output1.textContent = output2.value + ' ='
         }
 
         if(e.target.matches(".equal") && output2.value.includes("+")){

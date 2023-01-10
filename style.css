@@ -11,6 +11,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Lexend', sans-serif;
 }
 
 .wrapper{
@@ -50,8 +51,9 @@ body{
     text-align: end;
 }
 
-#output1{
-    font-size: 17px;
+.output1{
+    font-size: 14px;
+    color: gray;
 }
 
 #output2{
