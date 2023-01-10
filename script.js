@@ -6,8 +6,25 @@ let output2 = document.querySelector("#output2");
 let inputBtn = document.querySelectorAll(".input-btn");
 output2.value = '';
 inputBtn.forEach(box => {
-    
     box.addEventListener("click", (e) =>{
+        for(i = 0; i < inputBtn.length; i++){
+            let item = inputBtn[i]
+            if(item.classList.contains("clicked")){
+                item.classList.toggle("clicked")
+            }
+            
+            if(!e.target.matches(".input-btn")){
+                box.classList.remove("clicked")
+            }
+        }
+        box.classList.add("clicked")
+
+        for(i = 0; i < inputBtn.length; i++){
+            if(!e.target.matches(".input-btn")){
+                box.classList.remove("clicked")
+            }
+        }
+        
         if(!box.classList.contains('delete') && !box.classList.contains('equal')){
             output2.value += box.textContent
             addSpace(output2.value)
@@ -21,6 +38,11 @@ inputBtn.forEach(box => {
         }
         
     })
+    document.addEventListener("mousedown", function(e) {
+        if (e.target !== box) {
+            box.classList.remove("clicked")
+        }
+    });
 })
 
 function removeCharacter(word){

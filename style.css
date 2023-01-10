@@ -124,3 +124,7 @@ body{
     color: rgb(182,86,88);
     font-size: 30px;
 }
+
+.input-btn.ac{
+    grid-column: 1 / span 3;
+}
