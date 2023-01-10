@@ -25,7 +25,7 @@ inputBtn.forEach(box => {
             }
         }
         
-        if(!box.classList.contains('delete') && !box.classList.contains('equal')){
+        if(!box.classList.contains('delete') && !box.classList.contains('equal') &&!box.classList.contains('clear')){
             output2.value += box.textContent
             addSpace(output2.value)
         }
@@ -36,6 +36,10 @@ inputBtn.forEach(box => {
         if(e.target.matches(".delete")){
             output2.value = removeCharacter(output2.value)
         }
+
+        if(e.target.matches(".clear")){
+            output2.value = removeWord(output2.value)
+        }
         
     })
     document.addEventListener("mousedown", function(e) {
@@ -45,8 +49,13 @@ inputBtn.forEach(box => {
     });
 })
 
-function removeCharacter(word){
-    word = word.replace(word.charAt(word.length-1), '')
+function removeCharacter(character){
+    character = character.replace(character.charAt(character.length-1), '')
+    return character
+}
+
+function removeWord(word){
+    word = word.replace(word, '')
     return word
 }
 
