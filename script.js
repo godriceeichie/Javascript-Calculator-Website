@@ -5,6 +5,9 @@ let output1 = document.querySelector(".output1");
 let output2 = document.querySelector("#output2");
 let inputBtn = document.querySelectorAll(".input-btn");
 output2.value = '0';
+output2.addEventListener("focus", () => {
+    output2.value = ''
+})
 inputBtn.forEach(box => {
     box.addEventListener("click", (e) =>{
         output1.textContent = 'Answer = 0'
@@ -48,6 +51,7 @@ inputBtn.forEach(box => {
         }
 
         if(e.target.matches(".equal") && output2.value.includes("+")){
+
             output2.value = add(output2.value)
         }
         
