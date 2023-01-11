@@ -11,7 +11,6 @@ output2.addEventListener("focus", () => {
 })
 inputBtn.forEach(box => {
     box.addEventListener("click", (e) =>{
-        // localStorage.setItem('boxText', box.textContent)
         output1.textContent = 'Answer = 0'
         for(i = 0; i < inputBtn.length; i++){
             let item = inputBtn[i];
@@ -22,14 +21,13 @@ inputBtn.forEach(box => {
         }
         box.classList.add("clicked")
         
-        if(!box.classList.contains('delete') && !box.classList.contains('equal') &&!box.classList.contains('clear')){
+        if(!box.classList.contains('delete') && !box.classList.contains('equal') && !box.classList.contains('clear') && !box.classList.contains('square') && !box.classList.contains("square-root")){
             let number = '1234567890'
             if(output2.value === '0'){
                 output2.value = ''
             }
             
             output2.value += box.textContent
-            // console.log(localStorage);
         }
         
         if(e.target.matches(".delete")){
@@ -41,13 +39,19 @@ inputBtn.forEach(box => {
             output1.textContent = '';
         }
 
+        let equalClicked = false
         if(e.target.matches(".equal")){
             output1.textContent = output2.value + ' ='
+            equalClicked = true
         }
+
+        // if(equalClicked === true && e.target === box){
+        //     output2.value = ''
+        // }
 
         if(e.target.matches(".equal") && output2.value.includes("+")){
             output2.value = add(output2.value)
-            localStorage.setItem("addKey", output2.value)
+            // localStorage.setItem("addKey", output2.value)
         }
         
         if(e.target.matches(".equal") && output2.value.includes("−")){
@@ -62,16 +66,19 @@ inputBtn.forEach(box => {
             output2.value = divide(output2.value)
         }
 
-        // if(!box.classList.contains('delete') && !box.classList.contains('equal') &&!box.classList.contains('clear') && output2.value == localStorage.getItem("addKey")){
-        //     output2.value = '';
-        //     output2.value += box.textContent
-        // }
-    })
-    document.addEventListener("mousedown", function(e) {
-        if (e.target !== box) {
-            box.classList.remove("clicked")
+        if(e.target.matches(".square")){
+            output2.value = square(output2.value)
+            output1.textContent = `Answer = ${output2.value}`
         }
-    });
+
+        if(e.target.matches('.square-root')){
+            output1.value = squareRoot(output2.value)
+            output1.textContent = `Answer = ${output2.value}`
+        }
+        // console.log(output2.value);
+    })
+    
+    
 })
 
 function removeCharacter(character){
@@ -160,4 +167,7 @@ function divide(input){
     }
 }
 
-
+function square(input){
+    let square = Number(input * input)
+    return square
+}
