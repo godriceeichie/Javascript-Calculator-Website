@@ -1,14 +1,14 @@
 let signs = /[+]|÷|−|×/
 let operators = "+÷−×";
-let expression = "89 − 6 − 20 × 10"
+let expression = "89 × 6 × 3 − 85 ÷ 7 + 3"
 let array = expression.split(" ");
 let result = Number(array[0]);
 let answer = calcQuotient(array)
-answer = calcProduct(answer);
 console.log(answer);
+answer = calcProduct(answer);
 answer = calcSum(answer);
 answer = calcDifference(answer);
-
+// console.log(answer);
 
 function calcQuotient(array){
     let divideIndex = array.indexOf("÷");
@@ -25,13 +25,7 @@ function calcQuotient(array){
     // }
 
     else{
-        let result
-        if(array[prevIndex] === '−'){
-            result = (+prevChar * -1) / +nextChar
-        }
-        else{
-            result = +prevChar / +nextChar;
-        }
+        result = +prevChar / +nextChar;
         array.splice(array.indexOf(prevChar), 0, result)
         array.splice(divideIndex, 3)
         for(i = divideIndex + 1; i < array.length; i++){
@@ -100,7 +94,7 @@ function calcProduct(array){
         let multiplyIndex = array.indexOf("×")
         let prevChar = array[multiplyIndex - 1];
         let nextChar = array[multiplyIndex + 1];
-        let prevIndex = array.indexOf(prevChar) - 1;
+        // let prevIndex = array.indexOf(prevChar) - 1;
         let result = +prevChar * +nextChar;
         array.splice(array.indexOf(prevChar), 0, result)
         array.splice(multiplyIndex, 3)
@@ -187,13 +181,33 @@ function calcDifference(array){
     let regexResult = subSign.test(array)
 
     if(regexResult){
+        let signs = /[+×÷]/
         let subIndex = array.indexOf("−");
         let prevChar = array[subIndex-1]
         let nextChar = array[subIndex+1]
         let prevIndex = array.indexOf(prevChar) - 1
+        if(signs.test(array) === false){
+            let stringArray = array.join(" ")
+            let inputArray = stringArray.split("−")
+            for(i = 0; i < inputArray.length; i++){
+                let letter = inputArray[i]
+                let difference = Number(letter)
+                for(j = i + 1; j < inputArray.length; j++){
+                    let secondLetter = inputArray[j]
+                    difference -= Number(secondLetter)
+                }
+                if(Number.isInteger(difference)){
+                    return parseInt(difference)
+                }
+                else{
+                    return parseFloat(difference).toFixed(6)
+                }
+            }
+        }
         if(array[prevIndex] === "−"){
             result = +prevChar + +nextChar;
         }
+        // else if(nextChar < 0)
         else{
             result = +prevChar - +nextChar 
         }
