@@ -1,13 +1,14 @@
 let signs = /[+]|÷|−|×/
 let operators = "+÷−×";
-let expression = "89 − 6 + 47 × 8 + 23"
+let expression = "89 − 6 − 20 × 10"
 let array = expression.split(" ");
 let result = Number(array[0]);
 let answer = calcQuotient(array)
-answer = calcProduct(answer)
+answer = calcProduct(answer);
+console.log(answer);
 answer = calcSum(answer);
 answer = calcDifference(answer);
-console.log(answer);
+
 
 function calcQuotient(array){
     let divideIndex = array.indexOf("÷");
@@ -55,6 +56,7 @@ function calcQuotient(array){
 
 function calcProduct(array){
     let addIndex = array.indexOf("+");
+    let subIndex = array.indexOf("−")
     let multiplySign = /[×]/;
     let regexResult = multiplySign.test(array)
     
@@ -66,7 +68,7 @@ function calcProduct(array){
     //     calcSum(array)
     // }
 
-    else if(addIndex === -1){
+    else if(addIndex === -1 && subIndex === -1){
         let multiplyIndex = array.indexOf("×");
         let result;
         let prevChar = array[multiplyIndex-1]
@@ -99,13 +101,7 @@ function calcProduct(array){
         let prevChar = array[multiplyIndex - 1];
         let nextChar = array[multiplyIndex + 1];
         let prevIndex = array.indexOf(prevChar) - 1;
-        let result;
-        if(array[prevIndex] === '−'){
-            result = (+prevChar * -1) * +nextChar;
-        }
-        else{
-            result = +prevChar * +nextChar;
-        }
+        let result = +prevChar * +nextChar;
         array.splice(array.indexOf(prevChar), 0, result)
         array.splice(multiplyIndex, 3)
         for(i = multiplyIndex + 1; i < array.length; i++){
@@ -130,39 +126,34 @@ function calcProduct(array){
 }
 
 function calcSum(array, result){
-    let subIndex = array.indexOf("−");
+    let subSign = /−/;
     let addSign = /[+]/;
     let regexResult = addSign.test(array);
     if(regexResult === false){
         return array
     }
 
-    else if(subIndex === -1){
+    else if(subSign.test(array) === false){
         let addIndex = array.indexOf("+");
         let result;
         let prevChar = array[addIndex-1]
         let nextChar = array[addIndex+1]
-        let prevIndex = array.indexOf(prevChar) - 1
-        if(array[prevIndex] === "−"){
-            result = (+prevChar * -1) + +nextChar;
-            array.splice(array.indexOf(prevChar), 0, result)
-            array.splice(addIndex, 3)
-        }
-        else{
-            result = +prevChar + +nextChar
-            for(i = addIndex + 1; i < array.length; i++){
-                let item = array[i]
-                if(item === "+"){
-                    let prevChar = array[i-1]
-                    let nextChar = array[i+1]
-                    let answer = prevChar + nextChar;
-                    result += answer
-                    array.splice(array.indexOf(prevChar), 0, result)
-                    array.splice(i, 3)
-                }
+        let prevIndex = array.indexOf(prevChar) - 1;
+        array.splice(array.indexOf(prevChar), 0, result)
+        array.splice(addIndex, 3)
+        for(i = addIndex + 1; i < array.length; i++){
+            let item = array[i]
+            if(item === "+"){
+                let prevChar = array[i-1]
+                let nextChar = array[i+1]
+                let answer = prevChar + nextChar;
+                result += answer
+                array.splice(array.indexOf(prevChar), 0, result)
+                array.splice(i, 3)
             }
-            return result
         }
+        return result
+        
     }
 
     else{
@@ -171,24 +162,17 @@ function calcSum(array, result){
         let prevChar = array[addIndex-1]
         let nextChar = array[addIndex+1]
         let prevIndex = array.indexOf(prevChar) - 1
-        if(array[prevIndex] === "−"){
-            result = (+prevChar * -1) + +nextChar;
-        }
-        else{result = +prevChar + +nextChar};
+        
+        result = +prevChar + +nextChar
         array.splice(array.indexOf(prevChar), 0, result)
         array.splice(addIndex, 3)
-        for(i = addIndex + 1; i < array.length; i++){
+        for(i = addIndex - 1; i < array.length; i++){
             let item = array[i]
             if(item === "+"){
                 let prevChar = array[i - 1]
                 let nextChar = array[i + 1]
-                let prevIndex = array.indexOf(prevChar) - 1;
-                let result;
-                if(array[prevIndex] === "−"){
-                    result = (+prevChar * -1) + +nextChar
-                }
-                else{result = +prevChar + +nextChar}
-                array.splice(array.indexOf(prevChar), 0, result)
+                let result = +prevChar + +nextChar;
+                array.splice( i - 1, 0, result)
                 array.splice(i, 3)
             }
         }
@@ -208,20 +192,20 @@ function calcDifference(array){
         let nextChar = array[subIndex+1]
         let prevIndex = array.indexOf(prevChar) - 1
         if(array[prevIndex] === "−"){
-            result = (+prevChar * -1) - +nextChar;
+            result = +prevChar + +nextChar;
         }
         else{
-            result = +prevChar - +nextChar
-            for(i = subIndex + 1; i < array.length; i++){
-                let item = array[i]
-                if(item === "−"){
-                    let prevChar = array[i-1]
-                    let nextChar = array[i+1]
-                    let answer = prevChar - nextChar;
-                    result -= answer
-                }
-            }
-            return result
+            result = +prevChar - +nextChar 
         }
+        for(i = subIndex + 1; i < array.length; i++){
+            let item = array[i]
+            if(item === "−"){
+                let prevChar = array[i-1]
+                let nextChar = array[i+1]
+                let answer = prevChar - nextChar;
+                result -= answer
+            }
+        }
+        return result
     }
 }
