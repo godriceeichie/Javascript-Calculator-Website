@@ -29,7 +29,7 @@ inputBtn.forEach(box => {
             
             output2.value += box.textContent
         }
-        
+
         if(e.target.matches(".delete")){
             output2.value = removeCharacter(output2.value)
         }
@@ -39,23 +39,24 @@ inputBtn.forEach(box => {
             output1.textContent = '';
         }
 
-        let equalClicked = false
+        
+        let lastChar = output2.value.charAt(output2.value.length-1);
+
+        let signs = /[+]|÷|−|×/;
+        if(signs.test(e.target.textContent) && lastChar !== " "){
+            output2.value += ` ${e.target.textContent} `
+           
+        }
+
+        let multipleSigns = /(\d [+] \d)+ (\d ÷ \d)+ (\d − \d)+ (\d × \d)+/;
         if(e.target.matches(".equal")){
             output1.textContent = output2.value + ' ='
-            equalClicked = true
-        }
-        // console.log(e.target.className);
-        // if(e.target.className.includes("equal")){
-        //     console.log("hello there");
-        // }
 
-        // if(equalClicked === true && e.target === box){
-        //     output2.value = ''
-        // }
-        let signs = /[+]|÷|−|×/;
-        if(signs.test(e.target.textContent)){
-            output2.value += ` ${e.target.textContent} `
         }
+
+        // if(e.target.matches(".equal") && multipleSigns.test(output2.value)){
+        //     output2.value = calc()
+        // }
 
         if(e.target.matches(".equal") && output2.value.includes("+")){
             output2.value = add(output2.value)
@@ -83,15 +84,53 @@ inputBtn.forEach(box => {
             output2.value = squareRoot(output2.value)
             output1.textContent = `Answer = ${output2.value}`
         }
-    
-        let secondToLastChar = output2.value.charAt(output2.value.length-2);
-        let lastChar = output2.value.charAt(output2.value.length-1);
-        // console.log(secondToLastChar, lastChar);
-        if(signs.test(secondToLastChar) && signs.test(lastChar)){
-            // console.log("lol");
-            output2.value = output2.value.replace(lastChar, '')
-            // console.log(lastChar);
+
+        function calc(){
+
         }
+        let operators = "+÷−×";
+        // function calc(){
+        //     if(signs.test(output2.value)){
+        //         let result;
+        //         let prevChar;
+        //         let nextChar;
+        //         let output2Array = output2.value.split(" ")
+        //         for(let item of output2Array){
+        //             if(signs.test(item)){
+        //                 prevChar = Number(output2Array[output2Array.indexOf(item)-1])
+        //                 nextChar = Number(output2Array[output2Array.indexOf(item)+1])
+                        
+        //                 if(item === "÷"){
+        //                     result = prevChar/nextChar
+                            
+        //                 }
+        //                 else if(item === "×"){
+        //                     result *= prevChar
+        //                     if(item === output2Array[output2Array.length-2] || item === output2Array[output2Array.length-4]){
+        //                         result *= nextChar
+        //                     }
+        //                 }
+        //                 else if(item === "+"){
+        //                     result += prevChar
+        //                     if(item === output2Array[output2Array.length-2] || item === output2Array[output2Array.length-4]){
+        //                         result += nextChar
+        //                     }
+        //                 }
+        //                 else if(item === "−"){
+        //                     result -= prevChar
+        //                     if(item === output2Array[output2Array.length-2] || item === output2Array[output2Array.length-4]){
+        //                         result -= nextChar
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //         return result
+        //         // console.log(result);
+        //         // console.log("Godrice");
+        //     }
+        // }
+        // console.log(operators);
+
     })
 })
 
