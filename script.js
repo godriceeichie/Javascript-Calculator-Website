@@ -6,11 +6,13 @@ let output2 = document.querySelector("#output2");
 let inputBtn = document.querySelectorAll(".input-btn");
 let equalSign = document.querySelector(".equal")
 output2.value = '0';
-output2.addEventListener("focus", () => {
-    output2.value = ''
-})
 inputBtn.forEach(box => {
     box.addEventListener("click", (e) =>{
+        let number = /[0-9]/;
+        if(number.test(localStorage.getItem("output"))){
+            output2.value = ''
+            localStorage.removeItem("output")
+        }
         output1.textContent = 'Answer = 0'
         for(i = 0; i < inputBtn.length; i++){
             let item = inputBtn[i];
@@ -25,11 +27,11 @@ inputBtn.forEach(box => {
             if(output2.value === '0'){
                 output2.value = ''
             }
+            //We want to make the output 2 value disappear when the box button is pressed after the equal button is equaled
+            // output2.value = ""
             
             output2.value += box.textContent
         }
-
-        // console.log(calc(output2.value));
 
         if(e.target.matches(".delete")){
             output2.value = removeCharacter(output2.value)
@@ -53,8 +55,8 @@ inputBtn.forEach(box => {
         if(e.target.matches(".equal")){
             output1.textContent = output2.value + ' ='
             output2.value = calc(output2.value)
+            localStorage.setItem("output", output2.value)
         }
-
 
         if(e.target.matches(".square")){
             output2.value = square(output2.value)

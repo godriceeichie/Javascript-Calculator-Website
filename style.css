@@ -136,7 +136,7 @@ body{
     width: 100%;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 500px) and (max-height: 1130px){
     body{
         max-height: 90vh;
     }
@@ -145,6 +145,12 @@ body{
         height: 30%;
     }
 
+    .calc-input{
+        height: 50%;
+    }
+}
+
+@media screen and (max-width: 500px) and (max-height: 600px){
     .calc-input{
         height: 70%;
     }
