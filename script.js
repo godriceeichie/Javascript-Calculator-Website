@@ -16,8 +16,7 @@ inputBtn.forEach(box => {
             let item = inputBtn[i];
             if(item.classList.contains("clicked")){
                 item.classList.toggle("clicked")
-            }
-            
+            } 
         }
         box.classList.add("clicked")
         
@@ -29,6 +28,8 @@ inputBtn.forEach(box => {
             
             output2.value += box.textContent
         }
+
+        // console.log(calc(output2.value));
 
         if(e.target.matches(".delete")){
             output2.value = removeCharacter(output2.value)
@@ -51,29 +52,9 @@ inputBtn.forEach(box => {
         let multipleSigns = /(\d [+] \d)+ (\d ÷ \d)+ (\d − \d)+ (\d × \d)+/;
         if(e.target.matches(".equal")){
             output1.textContent = output2.value + ' ='
-
+            output2.value = calc(output2.value)
         }
 
-        // if(e.target.matches(".equal") && multipleSigns.test(output2.value)){
-        //     output2.value = calc()
-        // }
-
-        if(e.target.matches(".equal") && output2.value.includes("+")){
-            output2.value = add(output2.value)
-            // localStorage.setItem("addKey", output2.value)
-        }
-        
-        if(e.target.matches(".equal") && output2.value.includes("−")){
-            output2.value = subtract(output2.value)
-        }
-
-        if(e.target.matches(".equal") && output2.value.includes("×")){
-            output2.value = multiply(output2.value)
-        }
-
-        if(e.target.matches(".equal") && output2.value.includes("÷")){
-            output2.value = divide(output2.value)
-        }
 
         if(e.target.matches(".square")){
             output2.value = square(output2.value)
@@ -83,14 +64,16 @@ inputBtn.forEach(box => {
         if(e.target.matches('.square-root')){
             output2.value = squareRoot(output2.value)
             output1.textContent = `Answer = ${output2.value}`
-        }
-
-        let operators = /[+÷−×]/
-        if(e.target.matches(".equal") && operators.test(output2.value)){
-            
+        }  
+    })
+    document.addEventListener("mousedown", (e) =>{
+        if(e.target !== box){
+            box.classList.remove("clicked")
         }
     })
 })
+
+
 
 function removeCharacter(character){
     character = character.replace(character.charAt(character.length-1), '')
@@ -149,6 +132,7 @@ function calcQuotient(array){
             }
             
         }
+        // console.log(array);
         return array
     }
 }
@@ -365,79 +349,6 @@ function calcDifference(array){
     }
     else{
         return array
-    }
-}
-
-
-function add(input){
-    let inputArray = input.split("+")
-    for(i = 0; i < inputArray.length; i++){
-        let letter = inputArray[i]
-        let sum = Number(letter)
-        for(j = i + 1; j < inputArray.length; j++){
-            let secondLetter = inputArray[j]
-            sum += Number(secondLetter)
-        }
-        if(Number.isInteger(sum)){
-            return parseInt(sum)
-        }
-        else{
-            return parseFloat(sum)
-        }
-    }
-}
-
-function subtract(input){
-    let inputArray = input.split("−")
-    for(i = 0; i < inputArray.length; i++){
-        let letter = inputArray[i]
-        let difference = Number(letter)
-        for(j = i + 1; j < inputArray.length; j++){
-            let secondLetter = inputArray[j]
-            difference -= Number(secondLetter)
-        }
-        if(Number.isInteger(difference)){
-            return parseInt(difference)
-        }
-        else{
-            return parseFloat(difference).toFixed(6)
-        }
-    }
-}
-
-function multiply(input){
-    let inputArray = input.split("×")
-    for(i = 0; i < inputArray.length; i++){
-        let letter = inputArray[i]
-        let product = Number(letter)
-        for(j = i + 1; j < inputArray.length; j++){
-            let secondLetter = inputArray[j]
-            product *= Number(secondLetter)
-        }
-        if(Number.isInteger(product)){
-            return parseInt(product)
-        }
-        else{
-            return parseFloat(product).toFixed(6)
-        }
-    }
-}
-
-function divide(input){
-    let inputArray = input.split("÷")
-    for(i = 0; i < inputArray.length; i++){
-        let letter = inputArray[i]
-        let quotient = Number(letter)
-        for(j = i + 1; j < inputArray.length; j++){
-            let secondLetter = inputArray[j]
-            quotient /= Number(secondLetter)
-        }
-        if(Number.isInteger(quotient)){
-            return parseInt(quotient)
-        }
-        else{
-            return parseFloat(quotient).toFixed(6)
-        }
     }
 }
 
