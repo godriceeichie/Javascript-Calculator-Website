@@ -1,5 +1,3 @@
-
-let operators = "+÷−×";
 let expression = "3 × 6 ÷ 9 ÷ 6 − 8"
 let array = expression.split(" ");
 let answer = calcQuotient(array);
@@ -7,7 +5,6 @@ answer = calcProduct(answer);
 answer = calcSum(answer);
 answer = calcDifference(answer);
 console.log(answer);
-
 
 function calcQuotient(array){
     let divideIndex = array.indexOf("÷");
@@ -59,10 +56,6 @@ function calcProduct(array){
     if(regexResult === false){
         return array
     }
-
-    // else if(addIndex !== -1){
-    //     calcSum(array)
-    // }
 
     else if(addIndex === -1 && subIndex === -1){
         let multiplyIndex = array.indexOf("×");
@@ -127,7 +120,7 @@ function calcProduct(array){
     }
 }
 
-function calcSum(array, result){
+function calcSum(array){
     let subSign = /−/;
     let addSign = /[+]/;
     let regexResult = addSign.test(array);
@@ -236,9 +229,7 @@ function calcSum(array, result){
 }
 
 function calcDifference(array){
-    let result;
     let subSign = /−/;
-    // let arrayString = array.join(" ")
     let regexResult = subSign.test(array)
 
     if(regexResult){
