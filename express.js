@@ -1,6 +1,6 @@
 let signs = /[+]|÷|−|×/
 let operators = "+÷−×";
-let expression = "89 × 6 × 3 − 85 ÷ 7 + 3"
+let expression = "65 × 43 − 79 ÷ 46 × 23 − 8"
 let array = expression.split(" ");
 let result = Number(array[0]);
 let answer = calcQuotient(array)
@@ -8,6 +8,7 @@ console.log(answer);
 answer = calcProduct(answer);
 answer = calcSum(answer);
 answer = calcDifference(answer);
+
 // console.log(answer);
 
 function calcQuotient(array){
@@ -98,7 +99,7 @@ function calcProduct(array){
         let result = +prevChar * +nextChar;
         array.splice(array.indexOf(prevChar), 0, result)
         array.splice(multiplyIndex, 3)
-        for(i = multiplyIndex + 1; i < array.length; i++){
+        for(i = multiplyIndex - 1; i < array.length; i++){
             let item = array[i]
             if(item === "×"){
                 let nextSign = array[i - 2]
@@ -156,8 +157,12 @@ function calcSum(array, result){
         let prevChar = array[addIndex-1]
         let nextChar = array[addIndex+1]
         let prevIndex = array.indexOf(prevChar) - 1
-        
-        result = +prevChar + +nextChar
+        if(array[prevIndex] === "−"){
+            result = -1 * (+nextChar - +prevChar);
+        }
+        else{
+            result = +prevChar + +nextChar
+        }
         array.splice(array.indexOf(prevChar), 0, result)
         array.splice(addIndex, 3)
         for(i = addIndex - 1; i < array.length; i++){
@@ -203,23 +208,29 @@ function calcDifference(array){
                     return parseFloat(difference).toFixed(6)
                 }
             }
+            return result
         }
-        if(array[prevIndex] === "−"){
-            result = +prevChar + +nextChar;
-        }
-        // else if(nextChar < 0)
         else{
-            result = +prevChar - +nextChar 
+        //     if(array[prevIndex] === "−"){
+        //         result = +prevChar + +nextChar;
+        //     }
+        //     // else if(nextChar < 0)
+        //     else{
+        //         result = +prevChar - +nextChar 
+        //     }
+        //     for(i = subIndex + 1; i < array.length; i++){
+        //         let item = array[i]
+        //         if(item === "−"){
+        //             let prevChar = array[i-1]
+        //             let nextChar = array[i+1]
+        //             let answer = prevChar - nextChar;
+        //             result -= answer
+        //         }
+        //     }
+        //     return result
+        // }
+            let result = +prevChar - +nextChar;
+            return result
         }
-        for(i = subIndex + 1; i < array.length; i++){
-            let item = array[i]
-            if(item === "−"){
-                let prevChar = array[i-1]
-                let nextChar = array[i+1]
-                let answer = prevChar - nextChar;
-                result -= answer
-            }
-        }
-        return result
     }
 }
