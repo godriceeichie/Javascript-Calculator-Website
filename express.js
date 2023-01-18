@@ -1,26 +1,26 @@
-let signs = /[+]|÷|−|×/
+
 let operators = "+÷−×";
-let expression = "56 × 9 − 6 + 8 ÷ 6 − 3 ÷ 79 × 8"
+let expression = "3 × 6 ÷ 9 ÷ 6 − 8"
 let array = expression.split(" ");
-let result = Number(array[0]);
 let answer = calcQuotient(array);
 answer = calcProduct(answer);
 answer = calcSum(answer);
 answer = calcDifference(answer);
 console.log(answer);
 
+
 function calcQuotient(array){
     let divideIndex = array.indexOf("÷");
     let sign = /(\d+(?=÷))+/
     let prevChar = array[divideIndex - 1]
+    // console.log(prevChar);
     let nextChar = array[divideIndex + 1]
-    let prevIndex = array.indexOf(prevChar) - 1
     if(divideIndex === -1){
         return array
     }
 
     else{
-        result = +prevChar / +nextChar;
+        let result = +prevChar / +nextChar;
         array.splice(array.indexOf(prevChar), 0, result)
         array.splice(divideIndex, 3)
         for(i = divideIndex - 1; i < array.length; i++){
@@ -32,7 +32,6 @@ function calcQuotient(array){
                 result = +prevChar / +nextChar;
                 array.splice(array.indexOf(prevChar), 0, result)
                 array.splice(i, 3)
-                // console.log(result, array.indexOf(result));
                 for(j = i - 1; j < array.length; j++){
                     let item = array[j]
                     if(item === "÷"){
@@ -40,10 +39,8 @@ function calcQuotient(array){
                         let nextChar = array[j + 1]
                         let result;
                         result = +prevChar / +nextChar;
-                        // console.log(prevChar);
                         array.splice(array.indexOf(prevChar), 0, result)
                         array.splice(j, 3)
-                        // console.log(result);
                     }
                 }
             }
@@ -82,14 +79,16 @@ function calcProduct(array){
             result = +prevChar * +nextChar
             for(i = multiplyIndex + 1; i < array.length; i++){
                 let item = array[i]
-                if(item === "+"){
+                if(item === "×"){
                     let prevChar = array[i-1]
                     let nextChar = array[i+1]
                     let answer = prevChar * nextChar;
                     result *= answer
                     array.splice(array.indexOf(prevChar), 0, result)
-                    array.splice(i, 3)
+                    array.splice(i, 3);
+                    
                 }
+
             }
             return result
         }
@@ -105,15 +104,23 @@ function calcProduct(array){
         for(i = multiplyIndex - 1; i < array.length; i++){
             let item = array[i]
             if(item === "×"){
-                let nextSign = array[i - 2]
                 let prevChar = array[i - 1]
                 let nextChar = array[i + 1]
-                let prevIndex = array.indexOf(prevChar) - 1
                 let result;
                 result = +prevChar * +nextChar;
                 array.splice(array.indexOf(prevChar), 0, result)
                 array.splice(i, 3)
-                
+                for(j = i - 1; j < array.length; j++){
+                    let item = array[j]
+                    if(item === "×"){
+                        let prevChar = array[j - 1]
+                        let nextChar = array[j + 1]
+                        let result;
+                        result = +prevChar * +nextChar;
+                        array.splice(array.indexOf(prevChar), 0, result)
+                        array.splice(j, 3)
+                    }
+                }
             }
         }
         return array
@@ -185,6 +192,17 @@ function calcSum(array, result){
                 let result = +prevChar + +nextChar;
                 array.splice( i - 1, 0, result)
                 array.splice(i, 3)
+                for(j = i - 1; j < array.length; j++){
+                    let item = array[j]
+                    if(item === "+"){
+                        let prevChar = array[j - 1]
+                        let nextChar = array[j + 1]
+                        let result;
+                        result = +prevChar + +nextChar;
+                        array.splice(array.indexOf(prevChar), 0, result)
+                        array.splice(j, 3)
+                    }
+                }
             }
         }
         let subSign = /−/;
@@ -237,7 +255,6 @@ function calcDifference(array){
                 for(j = i + 1; j < inputArray.length; j++){
                     let secondLetter = inputArray[j]
                     difference -= +secondLetter;
-                    // console.log(difference);
                 }
                 if(Number.isInteger(difference)){
                     return parseInt(difference)

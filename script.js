@@ -85,52 +85,7 @@ inputBtn.forEach(box => {
             output1.textContent = `Answer = ${output2.value}`
         }
 
-        function calc(){
-
-        }
-        let operators = "+÷−×";
-        // function calc(){
-        //     if(signs.test(output2.value)){
-        //         let result;
-        //         let prevChar;
-        //         let nextChar;
-        //         let output2Array = output2.value.split(" ")
-        //         for(let item of output2Array){
-        //             if(signs.test(item)){
-        //                 prevChar = Number(output2Array[output2Array.indexOf(item)-1])
-        //                 nextChar = Number(output2Array[output2Array.indexOf(item)+1])
-                        
-        //                 if(item === "÷"){
-        //                     result = prevChar/nextChar
-                            
-        //                 }
-        //                 else if(item === "×"){
-        //                     result *= prevChar
-        //                     if(item === output2Array[output2Array.length-2] || item === output2Array[output2Array.length-4]){
-        //                         result *= nextChar
-        //                     }
-        //                 }
-        //                 else if(item === "+"){
-        //                     result += prevChar
-        //                     if(item === output2Array[output2Array.length-2] || item === output2Array[output2Array.length-4]){
-        //                         result += nextChar
-        //                     }
-        //                 }
-        //                 else if(item === "−"){
-        //                     result -= prevChar
-        //                     if(item === output2Array[output2Array.length-2] || item === output2Array[output2Array.length-4]){
-        //                         result -= nextChar
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //         return result
-        //         // console.log(result);
-        //         // console.log("Godrice");
-        //     }
-        // }
-        // console.log(operators);
-
+        
     })
 })
 
